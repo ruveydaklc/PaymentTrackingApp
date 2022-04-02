@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">PaymentTrackingApp</string>
+    <string name="add_payment">Ödeme Ekle</string>
+    <string name="edit">Düzenle</string>
+    <string name="type_detail">Tip ile ilgili detaylar görüntülenecektir. </string>
+    <string name="payment_info">Ödeme Detayı</string>
+    <string name="description">Ayrıntısı</string>
+    <string name="price">Fiyat</string>
+    <string name="date">Tarih</string>
+    <string name="save">Kaydet</string>
+    <string name="add_new_payment_type">Yeni Ödeme Tipi Ekle</string>
+    <string name="payment_period">Ödeme Periyodu</string>
+    <string name="delete">sil</string>
+    <string name="payment_type_tittle">Ödeme Tipi Başlığı</string>
+    <string name="day">Günü:</string>
+    <string name="ex_payment_type">Elektrik Faturaı</string>
+    <string name="ex_period">Aylık</string>
+    <string name="ex_period_day">Ayın 1.Günü</string>
+    <string name="last_payments">Son Ödemeler</string>
+
+
+
+
+
+
+
+
+
+</resources>
