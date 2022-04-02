@@ -25,7 +25,7 @@
             android:rotationX="4">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnAddpaymentC"
+                android:id="@+id/btnAddpaymentCt"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginTop="10dp"
@@ -39,40 +39,41 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="TouchTargetSizeCheck" />
 
             <TextView
-                android:id="@+id/tvDateC"
+                android:id="@+id/tvTypeCt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:rotationX="4"
                 android:text="@string/ex_payment_type"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/tvPriceC"
+                app:layout_constraintEnd_toStartOf="@+id/tvPeriodCt"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tvPriceC"
+                android:id="@+id/tvPeriodCt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="16dp"
                 android:text="@string/ex_period"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/tvPeriodDayC"
-                app:layout_constraintStart_toEndOf="@+id/tvDateC"
+                app:layout_constraintEnd_toStartOf="@+id/tvPeriodDayCt"
+                app:layout_constraintStart_toEndOf="@+id/tvTypeCt"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/tvPeriodDayC"
+                android:id="@+id/tvPeriodDayCt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/ex_period_day"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnAddpaymentC"
-                app:layout_constraintStart_toEndOf="@+id/tvPriceC"
+                app:layout_constraintEnd_toStartOf="@+id/btnAddpaymentCt"
+                app:layout_constraintStart_toEndOf="@+id/tvPeriodCt"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
