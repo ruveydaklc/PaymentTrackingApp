@@ -27,13 +27,13 @@ class NewPayTypeActivity : AppCompatActivity() {
 
         var pt=PaymentType()
 
-        var day:String
-        var title:String
 
         //adding new type
         binding.btnDeleteNT.isVisible=false
 
 
+        pt.Title= binding.eTvPayTypeTitleNT.text.toString()
+        pt.Day = binding.eTvDayNT.text.toString()
 
 
         //spinner
@@ -53,18 +53,17 @@ class NewPayTypeActivity : AppCompatActivity() {
 
 
         binding.btnSaveTypeNT.setOnClickListener {
-            title= binding.eTvPayTypeTitleNT.text.toString()
-            pt.Title=title
+            if (binding.eTvDayNT.text != null){
+                PaymentTypeBusinessLogic.addPaymentType(this,pt)
+                setResult(RESULT_OK)
+                finish()
+            }
+            else
+                Toast.makeText(this,"Geçerli bir gün giriniz", Toast.LENGTH_SHORT).show()
 
-
-            day = binding.eTvDayNT.text.toString()
-            pt.Day=day.toInt()
-
-            PaymentTypeBusinessLogic.addPaymentType(this,pt)
-            setResult(RESULT_OK)
-            finish()
         }
 
 
     }
+
 }

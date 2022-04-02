@@ -10,7 +10,7 @@ class pTypeDatabaseOpenHelper(context:Context, databaseName:String, factory: SQL
 
     override fun onCreate(db: SQLiteDatabase) {
 
-        val query = "CREATE TABLE PaymentType(Id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Title TEXT, Period TEXT, Day INTEGER)"
+        val query = "CREATE TABLE PaymentType(Id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, Title TEXT, Period TEXT, Day TEXT)"
         db.execSQL(query)
 
     }

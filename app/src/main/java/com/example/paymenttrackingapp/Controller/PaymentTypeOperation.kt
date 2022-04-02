@@ -11,7 +11,7 @@ class PaymentTypeOperation(context: Context) {
     var PaymentTypeDatabase: SQLiteDatabase?=null
     val dbOpenHelper: pTypeDatabaseOpenHelper
     val dbName="PaymentTypeDb"
-    val tableName="Payment"
+    val tableName="PaymentType"
 
     init {
         dbOpenHelper= pTypeDatabaseOpenHelper(context,dbName,null,1)
@@ -44,7 +44,7 @@ class PaymentTypeOperation(context: Context) {
                 pType = PaymentType()
                 pType.Id = cursor.getInt(0)
                 pType.Title = cursor.getString(cursor.getColumnIndex("Title"))
-                pType.Day = cursor.getInt(cursor.getColumnIndex("Day"))
+                pType.Day = cursor.getString(cursor.getColumnIndex("Day"))
                 pType.Period =cursor.getString(cursor.getColumnIndex("Period"))
 
                 paymentTypeList.add(pType)
