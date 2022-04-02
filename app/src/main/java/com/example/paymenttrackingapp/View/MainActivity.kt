@@ -21,8 +21,6 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var PaymentTypeList:ArrayList<PaymentType>
 
-    private lateinit var adapter:PaymentTypesAdapter
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
 

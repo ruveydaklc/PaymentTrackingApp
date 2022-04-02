@@ -17,8 +17,11 @@ import com.example.paymenttrackingapp.databinding.ActivityNewPayTypeBinding
 class NewPayTypeActivity : AppCompatActivity() {
 
     lateinit var binding: ActivityNewPayTypeBinding
+    var yearly="Yıllık"
+    var monthly = "Aylık"
+    var weekly= "Haftalık"
 
-    var periodList= arrayOf("Yıllık","Aylık","Haftalık")
+    var periodList= arrayOf(yearly,monthly,weekly)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,13 +30,17 @@ class NewPayTypeActivity : AppCompatActivity() {
 
         var pt=PaymentType()
 
+        var day:String
+        var title:String
 
         //adding new type
         binding.btnDeleteNT.isVisible=false
 
 
-        pt.Title= binding.eTvPayTypeTitleNT.text.toString()
-        pt.Day = binding.eTvDayNT.text.toString()
+        title= binding.eTvPayTypeTitleNT.text.toString()
+        pt.Title=title
+        day = binding.eTvDayNT.text.toString()
+        pt.Day=day
 
 
         //spinner
@@ -53,17 +60,45 @@ class NewPayTypeActivity : AppCompatActivity() {
 
 
         binding.btnSaveTypeNT.setOnClickListener {
-            if (binding.eTvDayNT.text != null){
-                PaymentTypeBusinessLogic.addPaymentType(this,pt)
-                setResult(RESULT_OK)
-                finish()
-            }
-            else
-                Toast.makeText(this,"Geçerli bir gün giriniz", Toast.LENGTH_SHORT).show()
 
+            //TODO(if else error)
+            if (day == ""){
+                toastInvalidDay()
+            }
+            else if (title==""){
+                Toast.makeText(this,"Geçerli bir tip giriniz", Toast.LENGTH_SHORT).show()
+            }
+            else{
+                if (pt.Period==yearly){
+                    if (day.toInt() > 365){
+                        toastInvalidDay()
+                    }
+
+                }
+                else if (pt.Period==monthly){
+                    if (day.toInt()>31){
+                        toastInvalidDay()
+                    }
+                }
+                else if (pt.Period==weekly){
+                    if (day.toInt()>7){
+                        toastInvalidDay()
+                    }
+                }
+                else{
+                    PaymentTypeBusinessLogic.addPaymentType(this,pt)
+                    setResult(RESULT_OK)
+                    finish()
+                }
+
+            }
         }
 
 
+    }
+
+    fun toastInvalidDay(){
+        Toast.makeText(this,"Geçerli bir gün giriniz", Toast.LENGTH_SHORT).show()
     }
 
 }
