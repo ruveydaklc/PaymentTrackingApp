@@ -24,8 +24,8 @@ class NewPayTypeActivity : AppCompatActivity() {
     var periodList= arrayOf(yearly,monthly,weekly)
     lateinit var day:String
     lateinit var title:String
-    lateinit var paymentType:PaymentType
-    var pt=PaymentType()
+    var id:Int?=null
+    var pt=PaymentType(id)
 
     lateinit var PaymentTypeList:ArrayList<PaymentType>
 
@@ -68,6 +68,7 @@ class NewPayTypeActivity : AppCompatActivity() {
         binding.spinnerPeriodNT.onItemSelectedListener = object :
             AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+
                 //Toast.makeText(this@NewPayTypeActivity,periodList.get(position) + " seçildi" , Toast.LENGTH_SHORT).show()
                 pt.Period=periodList.get(position)
             }
@@ -121,23 +122,25 @@ class NewPayTypeActivity : AppCompatActivity() {
 
     fun updatingTypeSetter(){
 
-        val position=intent.getIntExtra("p_type_item",0)
-        val p:PaymentType=PaymentTypeList.get(position)
+        //val position:PaymentType=intent.getSerializableExtra("p_type_item")
+        val p:PaymentType= intent.getSerializableExtra("sitem") as PaymentType
         binding.eTvPayTypeTitleNT.setText(p.Title)
         binding.eTvDayNT.setText(p.Day)
 
 
 
         binding.btnSaveTypeNT.setOnClickListener {
+            p.Title= binding.eTvPayTypeTitleNT.text.toString()
+            p.Day=binding.eTvDayNT.text.toString()
             PaymentTypeBusinessLogic.updatePaymentType(this,p)
-            val intent=Intent() //for update and delete operations
+            val intent= Intent() //for update and delete operations
             intent.putExtra("saveT_deleteF","save")
             setResult(RESULT_OK,intent)
             finish()
         }
         binding.btnDeleteNT.setOnClickListener {
-            PaymentTypeBusinessLogic.deletePaymentType(this,p.Id)
-            val intent=Intent() //for update and delete operations
+            PaymentTypeBusinessLogic.deletePaymentType(this, p.Id!!)
+            val intent= Intent() //for update and delete operations
             intent.putExtra("saveT_deleteF","delete")
             setResult(RESULT_OK,intent)
             finish()

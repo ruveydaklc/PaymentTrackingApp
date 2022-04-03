@@ -4,7 +4,7 @@ import java.io.Serializable
 import java.util.*
 import kotlin.properties.Delegates
 
-class Payment :Serializable
+class Payment : Serializable
 {
     var Id_h by Delegates.notNull<Int>()
     var Price  by Delegates.notNull<Int>()

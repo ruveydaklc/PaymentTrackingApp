@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         var intent=Intent(this, PaymentDetailActivity::class.java)
 
         //send the position
-        intent.putExtra("p_type",position)
+        intent.putExtra("p_type",PaymentTypeList.get(position))
         resultLauncher.launch(intent)
 
 

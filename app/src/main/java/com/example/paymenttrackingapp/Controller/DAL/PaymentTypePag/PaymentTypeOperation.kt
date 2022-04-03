@@ -27,7 +27,7 @@ class PaymentTypeOperation(context: Context) {
         }
     }
 
-    fun getAllPaymentTypes():Cursor{
+    fun getAllPaymentTypes(): Cursor {
         val query = "SELECT * FROM PaymentType"
         return PaymentTypeDatabase!!.rawQuery(query, null)
     }
@@ -41,8 +41,7 @@ class PaymentTypeOperation(context: Context) {
         var cursor: Cursor = getAllPaymentTypes()
         if (cursor.moveToFirst()) {
             do {
-                pType = PaymentType()
-                pType.Id = cursor.getInt(0)
+                pType = PaymentType(cursor.getInt(0))
                 pType.Title = cursor.getString(cursor.getColumnIndex("Title"))
                 pType.Day = cursor.getString(cursor.getColumnIndex("Day"))
                 pType.Period =cursor.getString(cursor.getColumnIndex("Period"))
@@ -56,7 +55,7 @@ class PaymentTypeOperation(context: Context) {
 
 
     fun addPaymentType(pType:PaymentType):Long{
-        val cv=ContentValues()
+        val cv= ContentValues()
         cv.put("Title",pType.Title)
         cv.put("Period",pType.Period)
         cv.put("Day",pType.Day)
@@ -69,7 +68,7 @@ class PaymentTypeOperation(context: Context) {
     }
 
     fun updatePaymentType(pType: PaymentType){
-        val cv=ContentValues()
+        val cv= ContentValues()
         cv.put("Title",pType.Title)
         cv.put("Period",pType.Period)
         cv.put("Day",pType.Day)
