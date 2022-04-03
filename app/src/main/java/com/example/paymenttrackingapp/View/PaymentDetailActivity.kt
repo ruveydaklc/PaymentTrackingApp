@@ -14,7 +14,7 @@ import com.example.paymenttrackingapp.databinding.ActivityPaymentDetailBinding
 class PaymentDetailActivity : AppCompatActivity() {
     lateinit var binding: ActivityPaymentDetailBinding
 
-    //lateinit var paymentType:PaymentType
+    lateinit var paymentType:PaymentType
     lateinit var PaymentTypeList:ArrayList<PaymentType>
 
     @SuppressLint("SetTextI18n")
@@ -25,13 +25,19 @@ class PaymentDetailActivity : AppCompatActivity() {
 
         PaymentTypeList= PaymentTypeBusinessLogic.getAllPaymentTypes(this)
 
-        var paymentType = intent.getSerializableExtra("p_type") as PaymentType
-
-        //paymentType=PaymentTypeList.get(positionq)
+        paymentType = intent.getSerializableExtra("p_type") as PaymentType
 
 
         binding.tvPaymentDetailPd.text=" ' ${paymentType.Title} '  tipindeki ödemeler"
+        clickFun()
 
+
+
+
+
+    }
+
+    fun clickFun(){
         binding.btnUpdatePd.setOnClickListener{
             Toast.makeText(this,"Güncelleme yapılacak", Toast.LENGTH_SHORT).show()
             val intent = Intent(this,NewPayTypeActivity::class.java)
@@ -42,17 +48,20 @@ class PaymentDetailActivity : AppCompatActivity() {
 
         binding.btnAddPaymentPd.setOnClickListener {
             Toast.makeText(this,"Ödeme Eklenecek", Toast.LENGTH_SHORT).show()
+            val intent= Intent(this,AddPayActivity::class.java)
+            intent.putExtra("type",paymentType)
+            resultLauncher.launch(intent)
+
         }
 
-
     }
-
 
     var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(),::reResult )
 
     fun reResult(result: ActivityResult){
         if(result.resultCode== RESULT_OK){
             finish()
+            //TODO(finish() fun will only work when the 'delete' button is pressed)
 
         }
         else if (result.resultCode == RESULT_CANCELED) {

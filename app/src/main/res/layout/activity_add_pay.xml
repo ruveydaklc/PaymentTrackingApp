@@ -13,54 +13,34 @@
         android:background="@drawable/bg2"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4Pi">
+        app:layout_constraintTop_toBottomOf="@+id/tvDescPi"
+        app:layout_constraintVertical_bias="0.492">
 
-        <LinearLayout
-            android:id="@+id/linear_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView6Pi"
-            app:layout_constraintTop_toBottomOf="@+id/eTvPricePi">
-
-            <DatePicker
-                android:id="@+id/date_Picker"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:calendarViewShown="false"
-                android:datePickerMode="spinner" />
-        </LinearLayout>
 
         <TextView
-            android:id="@+id/textView6Pi"
+            android:id="@+id/tvDate1Pi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="48dp"
+            android:layout_marginTop="24dp"
             android:text="@string/date"
             android:textColor="@color/orange"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:textSize="20sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/eTvPricePi"
-            app:layout_constraintVertical_bias="0.538" />
+            app:layout_constraintTop_toBottomOf="@+id/eTvPricePi" />
 
         <TextView
-            android:id="@+id/textView5Pi"
+            android:id="@+id/tvPricePi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="48dp"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="8dp"
             android:text="@string/price"
             android:textColor="@color/orange"
-            android:textSize="24sp"
+            android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/eTvPricePi"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -68,39 +48,65 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView7Pi"
+            android:id="@+id/tvTlPi"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
             android:gravity="center|center_horizontal|center_vertical"
             android:paddingStart="2dp"
             android:paddingEnd="2dp"
             android:text="₺"
             android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/linear_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toEndOf="@+id/eTvPricePi"
-            app:layout_constraintTop_toBottomOf="@+id/textView5Pi" />
+            app:layout_constraintTop_toBottomOf="@+id/tvPricePi" />
 
         <EditText
             android:id="@+id/eTvPricePi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
+            android:layout_marginStart="48dp"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="16dp"
             android:ems="10"
-            android:inputType="numberPassword"
-            android:textSize="24sp"
-            app:layout_constraintBottom_toTopOf="@+id/linear_layout"
+            android:inputType="number"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView5Pi" />
+            app:layout_constraintTop_toBottomOf="@+id/tvPricePi"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <ImageButton
+            android:id="@+id/btnCalendarPi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/bg1"
+            android:backgroundTint="@color/gray"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.34"
+            app:layout_constraintStart_toEndOf="@+id/tvDatePi"
+            app:layout_constraintTop_toBottomOf="@+id/tvDate1Pi"
+            app:layout_constraintVertical_bias="0.0"
+            app:srcCompat="@drawable/calendar"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/tvDatePi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/date"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/btnCalendarPi"
+            app:layout_constraintStart_toStartOf="@+id/tvDate1Pi"
+            app:layout_constraintTop_toTopOf="@+id/btnCalendarPi" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/textViewPi"
+        android:id="@+id/tvPaymentTypePi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -112,10 +118,11 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="NotSibling" />
 
     <TextView
-        android:id="@+id/textView4Pi"
+        android:id="@+id/tvDescPi"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -125,7 +132,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewPi" />
+        app:layout_constraintTop_toBottomOf="@+id/tvPaymentTypePi" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSavePi"

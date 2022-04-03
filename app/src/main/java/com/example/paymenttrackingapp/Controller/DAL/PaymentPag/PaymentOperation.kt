@@ -37,7 +37,7 @@ class PaymentOperation(context: Context) {
         cv.put("Month_date",p.Month_date)
         cv.put("Year_date",p.Year_date)
         open()
-        val record = PaymentDatabase!!.insert(tableName,null,cv)
+        PaymentDatabase!!.insert(tableName,null,cv)
         close()
 
     }
@@ -61,9 +61,7 @@ class PaymentOperation(context: Context) {
         var cursor: Cursor = getAllPayments()
         if (cursor.moveToFirst()) {
             do {
-                p = Payment()
-                p.Id_h = cursor.getInt(0)
-                p.Price = cursor.getInt(cursor.getColumnIndex("Price"))
+                p = Payment(cursor.getInt(0),cursor.getInt(cursor.getColumnIndex("Price")))
                 p.Day_date = cursor.getInt(cursor.getColumnIndex("Day_date"))
                 p.Month_date = cursor.getInt(cursor.getColumnIndex("Month_date"))
                 p.Year_date = cursor.getInt(cursor.getColumnIndex("Year_date"))

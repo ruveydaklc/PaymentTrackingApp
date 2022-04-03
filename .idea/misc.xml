@@ -5,7 +5,9 @@
       <map>
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/PaymentTrackingApp/app/src/main/res/drawable/bg1.xml" value="0.2703125" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/PaymentTrackingApp/app/src/main/res/drawable/bg2.xml" value="0.2703125" />
-        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/PaymentTrackingApp/app/src/main/res/layout/activity_add_pay.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/PaymentTrackingApp/app/src/main/res/drawable/calendar.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/PaymentTrackingApp/app/src/main/res/drawable/ic_baseline_calendar_today_24.xml" value="0.26979166666666665" />
+        <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/PaymentTrackingApp/app/src/main/res/layout/activity_add_pay.xml" value="0.4" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/PaymentTrackingApp/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/PaymentTrackingApp/app/src/main/res/layout/activity_new_pay_type.xml" value="0.4" />
         <entry key="..\:/Users/yunli/Documents/Android Kotlin Projects/PaymentTrackingApp/app/src/main/res/layout/activity_payment_detail.xml" value="0.4" />
