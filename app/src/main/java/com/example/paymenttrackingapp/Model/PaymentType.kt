@@ -1,12 +1,12 @@
 package com.example.paymenttrackingapp.Model
 
 import java.io.Serializable
-import java.time.Period
 import kotlin.properties.Delegates
 
-class PaymentType :Serializable{
+class PaymentType :Serializable
+{
     var Id by Delegates.notNull<Int>()
-    var Title:String?=null
+    lateinit var Title:String
     var Period:String?=null
     var Day:String?=null
 }

@@ -1,10 +1,11 @@
-package com.example.paymenttrackingapp.Controller
+package com.example.paymenttrackingapp.Controller.DAL.PaymentPag
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import com.example.paymenttrackingapp.Controller.DAL.PaymentTypePag.pTypeDatabaseOpenHelper
 import com.example.paymenttrackingapp.Model.Payment
 
 class PaymentOperation(context: Context) {

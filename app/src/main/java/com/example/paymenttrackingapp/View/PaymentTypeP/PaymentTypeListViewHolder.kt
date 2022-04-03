@@ -1,16 +1,14 @@
-package com.example.paymenttrackingapp.View.PaymentType
+package com.example.paymenttrackingapp.View.PaymentTypeP
 
 import android.content.Context
-import android.content.Intent
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.paymenttrackingapp.Model.PaymentType
 import com.example.paymenttrackingapp.R
-import com.example.paymenttrackingapp.View.AddPayActivity
 
-class PaymentTypeListViewHolder(itemView: View,ptList:ArrayList<PaymentType>,itemClick:(position:Int)->Unit):RecyclerView.ViewHolder(itemView) {
+class PaymentTypeListViewHolder(itemView: View, ptList:ArrayList<PaymentType>, itemClick:(position:Int)->Unit):RecyclerView.ViewHolder(itemView) {
 
     var btnPayAdd:Button
     var tvType:TextView
@@ -24,22 +22,26 @@ class PaymentTypeListViewHolder(itemView: View,ptList:ArrayList<PaymentType>,ite
         tvPeriod=itemView.findViewById(R.id.tvPeriodCt)
         tvDay=itemView.findViewById(R.id.tvPeriodDayCt)
 
+        //cardView.setOnClickListener { itemClick(adapterPosition,ptList) }
+
         itemView.setOnClickListener { itemClick(adapterPosition) }
 
+        btnPayAdd.setOnClickListener { itemClick(adapterPosition) }
     }
 
 
     fun bindData(context:Context,item:PaymentType){
 
-        btnPayAdd.setOnClickListener {
+        /*btnPayAdd.setOnClickListener {
 
-            val intent=Intent(context,AddPayActivity::class.java)
+           val intent=Intent(context,AddPayActivity::class.java)
             intent.putExtra("item", item)
             context.startActivity(intent)
-        }
+        }*/
         tvType.text=item.Title
         tvPeriod.text=item.Period
-        tvDay.text=item.Day.toString()
+        tvDay.text="${item.Day}. gün"
+
 
 
     }

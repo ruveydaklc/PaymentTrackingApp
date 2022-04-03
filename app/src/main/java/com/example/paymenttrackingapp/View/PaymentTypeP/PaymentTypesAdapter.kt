@@ -1,4 +1,4 @@
-package com.example.paymenttrackingapp.View.PaymentType
+package com.example.paymenttrackingapp.View.PaymentTypeP
 
 import android.content.Context
 import android.view.LayoutInflater

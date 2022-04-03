@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -11,9 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.paymenttrackingapp.Controller.BLL.PaymentTypeBusinessLogic
 import com.example.paymenttrackingapp.Model.PaymentType
 import com.example.paymenttrackingapp.R
-import com.example.paymenttrackingapp.View.PaymentType.PaymentTypesAdapter
+import com.example.paymenttrackingapp.View.PaymentTypeP.PaymentTypesAdapter
 import com.example.paymenttrackingapp.databinding.ActivityMainBinding
-import com.example.paymenttrackingapp.databinding.ActivityNewPayTypeBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -38,8 +38,11 @@ class MainActivity : AppCompatActivity() {
         binding.btnNewPayType.setOnClickListener {
 
             val intent=Intent(this,NewPayTypeActivity::class.java)
+            intent.putExtra("new",true)
             resultLauncher.launch(intent)
         }
+
+        binding.rvpayType.adapter!!.notifyDataSetChanged()
 
 
 
@@ -47,7 +50,19 @@ class MainActivity : AppCompatActivity() {
 
 
     fun itemClick(position:Int){
-        Toast.makeText(this,"tıkladığınız eleman: "+PaymentTypeList.get(position),Toast.LENGTH_SHORT).show()
+        Toast.makeText(this,"tıkladığınız eleman: "+PaymentTypeList.get(position).Title,Toast.LENGTH_SHORT).show()
+
+        var intent=Intent(this, PaymentDetailActivity::class.java)
+
+        //send the position
+        intent.putExtra("p_type",position)
+        resultLauncher.launch(intent)
+
+
+    }
+
+    fun addingPaymentClick(position: Int){
+        //TODO(add intent)
 
     }
 
@@ -58,17 +73,25 @@ class MainActivity : AppCompatActivity() {
         val lm=LinearLayoutManager(this)
         lm.orientation=LinearLayoutManager.VERTICAL
         binding.rvpayType.layoutManager=lm
+
         binding.rvpayType.adapter=PaymentTypesAdapter(this,PaymentTypeList,::itemClick)
+
+
+
     }
 
-    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult() ){
-            result->
+    var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(),::reResult )
+
+    fun reResult(result:ActivityResult){
+
         if(result.resultCode== RESULT_OK){
-            getAllPaymentTypes()
             Toast.makeText(this,"Ödeme Tipiniz Kaydedilmiştir",Toast.LENGTH_SHORT).show()
         }
+        else{ }
+        getAllPaymentTypes()
 
     }
+
 
 
 
