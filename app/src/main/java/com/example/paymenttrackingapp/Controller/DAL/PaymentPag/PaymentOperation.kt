@@ -29,17 +29,17 @@ class PaymentOperation(context: Context) {
         }
     }
 
-    fun getAllPayments():Cursor{
-        val queryP = "SELECT * FROM Payment"
+    fun getAllPayments(ptype: String):Cursor{
+        val queryP = "SELECT * FROM Payment WHERE ptTitle = '${ptype}' "
         return PaymentDatabase!!.rawQuery(queryP,null)
     }
 
     @SuppressLint("Range")
-    fun getPayments():ArrayList<Payment>{
+    fun getPayments(ptype:String):ArrayList<Payment>{
         val paymentList=ArrayList<Payment>()
         var p: Payment
         open()
-        var cursor:Cursor = getAllPayments()
+        var cursor:Cursor = getAllPayments(ptype)
         if (cursor.moveToFirst()){
             do {
                 p= Payment(cursor.getInt(0))

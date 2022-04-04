@@ -40,20 +40,19 @@ class PaymentDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
-        getLastPayments()
         paymentType = intent.getSerializableExtra("p_type") as PaymentType //from MainActivity - clicked type item
-
+        getLastPayments(paymentType.Title)
 
         PaymentTypeList= PaymentTypeBusinessLogic.getAllPaymentTypes(this)
-        paymentList=PaymentBusinessLogic.getAllPayments(this)
+        paymentList=PaymentBusinessLogic.getAllPayments(this,paymentType.Title)
 
         binding.tvPaymentDetailPd.text=" ' ${paymentType.Title} '  tipindeki ödemeler"
         clickFun()
 
 
     }
-    fun getLastPayments(){
-        paymentList=PaymentBusinessLogic.getAllPayments(this)
+    fun getLastPayments(ptype:String){
+        paymentList=PaymentBusinessLogic.getAllPayments(this,ptype)
         val lm =LinearLayoutManager(this)
         lm.orientation=LinearLayoutManager.VERTICAL
         binding.rvLastPayment.layoutManager=lm
@@ -85,7 +84,7 @@ class PaymentDetailActivity : AppCompatActivity() {
         yesBtn.setOnClickListener {
             Toast.makeText(this,"ürün sil",Toast.LENGTH_SHORT).show()
             PaymentBusinessLogic.deletePayment(this, p.Id!!)
-            getLastPayments()
+            getLastPayments(paymentType.Title)
             dialog.dismiss()
         }
         cancelBtn.setOnClickListener {
@@ -132,7 +131,7 @@ class PaymentDetailActivity : AppCompatActivity() {
                 }
                 else if (result.data!!.getStringExtra("update_info") == "not") //from AddPayActivity -to know is update or not
                 {
-                    getLastPayments()
+                    getLastPayments(paymentType.Title)
                     Toast.makeText(this,"Ödeme Eklendi başarılı.",Toast.LENGTH_SHORT).show()
                     binding.rvLastPayment.adapter!!.notifyDataSetChanged()
                 }

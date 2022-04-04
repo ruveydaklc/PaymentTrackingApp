@@ -10,8 +10,8 @@ class PaymentBusinessLogic {
             val poA=PaymentOperation(context)
             poA.addPayment(paymant)
         }
-        fun getAllPayments(context: Context):ArrayList<Payment>{
-            return PaymentOperation(context).getPayments()
+        fun getAllPayments(context: Context,ptype:String):ArrayList<Payment>{
+            return PaymentOperation(context).getPayments(ptype)
         }
         fun deletePayment(context: Context,id:Int){
             val poD=PaymentOperation(context)
