@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Display
 import android.view.Gravity
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.PopupWindow
 import android.widget.Toast
@@ -33,9 +34,9 @@ class AddPayActivity : AppCompatActivity() {
     var payment = Payment(id)
 
 
-    private var year = 0
-    private var month = 0
-    private var day = 0
+    var year = 0
+    var month = 0
+    var day = 0
     private lateinit var calendar: Calendar
 
 
@@ -49,7 +50,7 @@ class AddPayActivity : AppCompatActivity() {
         binding.tvDescPi.text="${pType.Title} türüne ödeme ekleyiniz"
 
         binding.btnCalendarPi.setOnClickListener {
-            dateFun()
+            clickDataPicker()
         }
 
         binding.btnSavePi.setOnClickListener {
@@ -75,38 +76,36 @@ class AddPayActivity : AppCompatActivity() {
     }
 
 
-    @SuppressLint("SimpleDateFormat", "ResourceAsColor")
-    //TODO(is not work)
-    fun dateFun(){
-        calendar= Calendar.getInstance()
-
-        val dialog = DatePickerDialog(this, { _, year, month, day_of_month ->
-                calendar[Calendar.YEAR] = year
-                calendar[Calendar.MONTH] = month + 1
-                calendar[Calendar.DAY_OF_MONTH] = day_of_month
-                val dateFormatter = "dd/MM/yyyy"
-                val sdf = SimpleDateFormat(dateFormatter, Locale.getDefault())
-                binding.tvDatePi.text = sdf.format(calendar.time)
-            }, calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DAY_OF_MONTH])
-
-
-        calendar.add(Calendar.YEAR, 0)
-
+    @SuppressLint("SetTextI18n")
+    fun clickDataPicker(){
+        calendar = Calendar.getInstance()
         year = calendar.get(Calendar.YEAR)
         month = calendar.get(Calendar.MONTH)
         day = calendar.get(Calendar.DAY_OF_MONTH)
 
-        payment.Year_date=year
-        payment.Month_date=month
-        payment.Day_date=day
+        val dialog = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            // Display Selected date in Toast
+            Toast.makeText(this, """$dayOfMonth - ${monthOfYear + 1} - $year""", Toast.LENGTH_LONG).show()
+            //setting paymetnt's date
+            payment.Year_date=year
+            payment.Month_date=monthOfYear +1
+            payment.Day_date=dayOfMonth
 
-        //max and min date is today
+            val dateFormatter = "dd/MM/yyyy"
+            val sdf = SimpleDateFormat(dateFormatter, Locale.getDefault())
+            binding.tvDatePi.text = "${dayOfMonth}/${monthOfYear + 1}/${year}"
+                                                                               }, year, month, day)
+
+
+
+
+
+        //max and min date- max date is today
+        dialog.datePicker.maxDate=calendar.timeInMillis
         dialog.datePicker.minDate = GregorianCalendar(year - 50, month, day, 0, 0).timeInMillis
-        dialog.datePicker.maxDate = calendar.timeInMillis
+
         dialog.show()
-
     }
-
 
 
 }
