@@ -54,9 +54,7 @@ class AddPayActivity : AppCompatActivity() {
 
         binding.btnSavePi.setOnClickListener {
             payment.Price=binding.eTvPricePi.text.toString().toInt()
-            payment.Year_date=year
-            payment.Month_date=month
-            payment.Day_date=day
+
             payment.ptTitle=pType.Title
             PaymentBusinessLogic.addPayment(this,payment,pType.Title)
             val intent=Intent()
@@ -67,9 +65,15 @@ class AddPayActivity : AppCompatActivity() {
         }
 
 
-
-
     }
+
+
+
+    override fun onBackPressed() {
+        setResult(RESULT_CANCELED)
+        finish()
+    }
+
 
     @SuppressLint("SimpleDateFormat", "ResourceAsColor")
     //TODO(is not work)
@@ -84,11 +88,17 @@ class AddPayActivity : AppCompatActivity() {
                 val sdf = SimpleDateFormat(dateFormatter, Locale.getDefault())
                 binding.tvDatePi.text = sdf.format(calendar.time)
             }, calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DAY_OF_MONTH])
+
+
         calendar.add(Calendar.YEAR, 0)
 
         year = calendar.get(Calendar.YEAR)
         month = calendar.get(Calendar.MONTH)
         day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        payment.Year_date=year
+        payment.Month_date=month
+        payment.Day_date=day
 
         //max and min date is today
         dialog.datePicker.minDate = GregorianCalendar(year - 50, month, day, 0, 0).timeInMillis

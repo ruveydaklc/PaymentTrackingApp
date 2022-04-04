@@ -73,8 +73,8 @@ class PaymentDetailActivity : AppCompatActivity() {
 
 
     private fun showDialog(p:Payment) {
-        var popTitle="Ödemeyi silmek istiyor musunuz?"
-        val popMessage="Veriyi ödeme geçmişinden silmek için sil butonuna tıklayınız"
+        var popTitle="!!Uyarı!!"
+        val popMessage="Ödemeyi silmek istiyor musunuz?"
         val dialog = Dialog(this)
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)
@@ -117,12 +117,15 @@ class PaymentDetailActivity : AppCompatActivity() {
 
     }
 
+
+
     var resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult(),::reResult )
 
     @SuppressLint("SetTextI18n")
     fun reResult(result: ActivityResult){
-        var info_updateOrNot =result.data!!.getStringExtra("update_info") //from NewPayTypeActivity and AddPayActivity -to know is update or not
         if(result.resultCode== RESULT_OK){
+            var info_updateOrNot =result.data!!.getStringExtra("update_info") //from NewPayTypeActivity and AddPayActivity -to know is update or not
+
             val intentValue:String= result.data!!.getStringExtra("page_back").toString() //from AddPayActivity and NewPaymentActivity -to know which page to return to (detail or main)
 
             if (intentValue == "detail") //to know which page to return to (detail or main)
@@ -159,6 +162,7 @@ class PaymentDetailActivity : AppCompatActivity() {
             }
 
         }
+
         else if (result.resultCode == RESULT_CANCELED) {
             Toast.makeText(this,"İşlemi iptel ettiniz", Toast.LENGTH_SHORT).show()
         }
