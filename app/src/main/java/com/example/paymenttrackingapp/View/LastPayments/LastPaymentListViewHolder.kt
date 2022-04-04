@@ -24,8 +24,8 @@ class LastPaymentListViewHolder (itemView:View,pList:ArrayList<Payment>,itemClic
 
     @SuppressLint("SetTextI18n")
     fun bindData(context: Context, item:Payment){
-        tvPrice.text=item.Price.toString()
-        tvDate.text= item.Day_date.toString() + item.Month_date.toString() + item.Year_date.toString()
+        tvPrice.text=item.Price.toString() + " ₺"
+        tvDate.text= "${item.Day_date}.${item.Month_date}.${item.Year_date}"
     }
 
 }

@@ -7,11 +7,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.paymenttrackingapp.Model.PaymentType
 import com.example.paymenttrackingapp.R
 
-class PaymentTypesAdapter(val context: Context,var paymentTypesList:ArrayList<PaymentType>,val itemClick:(position:Int)->Unit):RecyclerView.Adapter<PaymentTypeListViewHolder>(){
+class PaymentTypesAdapter(val context: Context,var paymentTypesList:ArrayList<PaymentType>,val itemClick:(position:Int)->Unit, val addItemClick:(position:Int)->Unit):RecyclerView.Adapter<PaymentTypeListViewHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PaymentTypeListViewHolder {
 
         val view=LayoutInflater.from(context).inflate(R.layout.payment_type_line_design,parent,false)
-        return PaymentTypeListViewHolder(view,paymentTypesList,itemClick)
+        return PaymentTypeListViewHolder(view,paymentTypesList,itemClick,addItemClick)
     }
 
     override fun onBindViewHolder(holder: PaymentTypeListViewHolder, position: Int) {

@@ -10,6 +10,7 @@ import com.example.paymenttrackingapp.Model.PaymentType
 class PaymentTypeOperation(context: Context) {
     var PaymentTypeDatabase: SQLiteDatabase?=null
     val dbOpenHelper: pTypeDatabaseOpenHelper
+
     val dbName="PaymentTypeDb"
     val tableName="PaymentType"
 
@@ -27,7 +28,7 @@ class PaymentTypeOperation(context: Context) {
         }
     }
 
-    fun getAllPaymentTypes(): Cursor {
+    fun getAllPaymentTypes():Cursor{
         val query = "SELECT * FROM PaymentType"
         return PaymentTypeDatabase!!.rawQuery(query, null)
     }
@@ -55,7 +56,7 @@ class PaymentTypeOperation(context: Context) {
 
 
     fun addPaymentType(pType:PaymentType):Long{
-        val cv= ContentValues()
+        val cv=ContentValues()
         cv.put("Title",pType.Title)
         cv.put("Period",pType.Period)
         cv.put("Day",pType.Day)
@@ -68,7 +69,7 @@ class PaymentTypeOperation(context: Context) {
     }
 
     fun updatePaymentType(pType: PaymentType){
-        val cv= ContentValues()
+        val cv=ContentValues()
         cv.put("Title",pType.Title)
         cv.put("Period",pType.Period)
         cv.put("Day",pType.Day)

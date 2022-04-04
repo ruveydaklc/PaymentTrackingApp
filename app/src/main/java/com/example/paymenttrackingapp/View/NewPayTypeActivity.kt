@@ -12,7 +12,6 @@ import androidx.core.view.isVisible
 import com.example.paymenttrackingapp.Controller.BLL.PaymentTypeBusinessLogic
 import com.example.paymenttrackingapp.Model.PaymentType
 import com.example.paymenttrackingapp.databinding.ActivityNewPayTypeBinding
-import kotlinx.android.synthetic.main.activity_new_pay_type.*
 
 class NewPayTypeActivity : AppCompatActivity() {
 
@@ -36,11 +35,14 @@ class NewPayTypeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
 
+        day=""
+        title=""
+
         var isNew:Boolean
 
         PaymentTypeList= PaymentTypeBusinessLogic.getAllPaymentTypes(this)
 
-        isNew=intent.getBooleanExtra("new",false)
+        isNew=intent.getBooleanExtra("new",false) //from MainActivity - is a new record
 
         if (isNew == true ){
             //is a new type
@@ -87,7 +89,7 @@ class NewPayTypeActivity : AppCompatActivity() {
                 Toast.makeText(this,"Geçerli bir tip giriniz", Toast.LENGTH_SHORT).show()
             }
             else{
-                dateAddOrganize()
+                dateAddOrganize(pt)
             }
         }
 
@@ -105,8 +107,8 @@ class NewPayTypeActivity : AppCompatActivity() {
         binding.btnDeleteNT.setOnClickListener {
             PaymentTypeBusinessLogic.deletePaymentType(this, p.Id!!)
             val intent= Intent() //for update and delete operations
-            intent.putExtra("saveT_deleteF","delete")
-            intent.putExtra("page_back","main")
+            intent.putExtra("saveT_deleteF","delete")  //to know is saving or deleting
+            intent.putExtra("page_back","main") //to know which page to return to
             setResult(RESULT_OK,intent)
             finish()
         }
@@ -130,8 +132,8 @@ class NewPayTypeActivity : AppCompatActivity() {
         Toast.makeText(this,"Geçerli bir gün giriniz", Toast.LENGTH_SHORT).show()
     }
 
-    fun dateAddOrganize(){
-        if (pt.Period==yearly){
+    fun dateAddOrganize(pt:PaymentType){
+        if (pt.Period == yearly){
             if (day.toInt() > 365){
                 toastInvalidDay()
             }
@@ -156,8 +158,6 @@ class NewPayTypeActivity : AppCompatActivity() {
                 elseaddPayFun()
             }
         }
-
-        elseaddPayFun()
     }
     fun elseaddPayFun(){
         PaymentTypeBusinessLogic.addPaymentType(this,pt)
@@ -205,6 +205,7 @@ class NewPayTypeActivity : AppCompatActivity() {
         intent.putExtra("saveT_deleteF","save")
         intent.putExtra("page_back","detail")
         intent.putExtra("saved_item",p)
+        intent.putExtra("update_info","update")
         setResult(RESULT_OK,intent)
         finish()
     }

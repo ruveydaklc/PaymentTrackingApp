@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         binding.btnNewPayType.setOnClickListener {
 
             val intent=Intent(this,NewPayTypeActivity::class.java)
-            intent.putExtra("new",true)
+            intent.putExtra("new",true) //to NewPayTypeActivity - is a new record
             resultLauncher.launch(intent)
         }
 
@@ -55,14 +55,16 @@ class MainActivity : AppCompatActivity() {
         var intent=Intent(this, PaymentDetailActivity::class.java)
 
         //send the position
-        intent.putExtra("p_type",PaymentTypeList.get(position))
+        intent.putExtra("p_type",PaymentTypeList.get(position)) //to PaymentDetailActivity - clicked type item
         resultLauncher.launch(intent)
 
 
     }
 
     fun addingPaymentClick(position: Int){
-        //TODO(add intent)
+        val intent=Intent(this,AddPayActivity::class.java)
+        intent.putExtra("type",PaymentTypeList.get(position)) //to AddPayActivity - clicked adding button
+        resultLauncher.launch(intent)
 
     }
 
@@ -74,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         lm.orientation=LinearLayoutManager.VERTICAL
         binding.rvpayType.layoutManager=lm
 
-        binding.rvpayType.adapter=PaymentTypesAdapter(this,PaymentTypeList,::itemClick)
+        binding.rvpayType.adapter=PaymentTypesAdapter(this,PaymentTypeList,::itemClick,::addingPaymentClick)
 
 
 

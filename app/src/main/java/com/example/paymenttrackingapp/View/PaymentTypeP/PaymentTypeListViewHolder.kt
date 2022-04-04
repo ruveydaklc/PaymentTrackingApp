@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.paymenttrackingapp.Model.PaymentType
 import com.example.paymenttrackingapp.R
 
-class PaymentTypeListViewHolder(itemView: View, ptList:ArrayList<PaymentType>, itemClick:(position:Int)->Unit):RecyclerView.ViewHolder(itemView) {
+class PaymentTypeListViewHolder(itemView: View, ptList:ArrayList<PaymentType>, itemClick:(position:Int)->Unit,addItemClick:(position:Int)->Unit):RecyclerView.ViewHolder(itemView) {
 
     var btnPayAdd:Button
     var tvType:TextView
@@ -26,7 +26,7 @@ class PaymentTypeListViewHolder(itemView: View, ptList:ArrayList<PaymentType>, i
 
         itemView.setOnClickListener { itemClick(adapterPosition) }
 
-        btnPayAdd.setOnClickListener { itemClick(adapterPosition) }
+        btnPayAdd.setOnClickListener { addItemClick(adapterPosition) }
     }
 
 
