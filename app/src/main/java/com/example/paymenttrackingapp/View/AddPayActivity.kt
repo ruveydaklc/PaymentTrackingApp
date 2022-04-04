@@ -1,19 +1,34 @@
 package com.example.paymenttrackingapp.View
 
 import android.annotation.SuppressLint
+import android.app.DatePickerDialog
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.example.paymenttrackingapp.Model.Payment
 import com.example.paymenttrackingapp.Model.PaymentType
+import com.example.paymenttrackingapp.R
 import com.example.paymenttrackingapp.databinding.ActivityAddPayBinding
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.text.SimpleDateFormat
+import java.time.Year
 import java.util.*
 
 class AddPayActivity : AppCompatActivity() {
     lateinit var binding : ActivityAddPayBinding
-    lateinit var payment:Payment
+
+    var id:Int?=null
+    var price:Int?=null
+
+    var payment = Payment(id, price)
+
+
+    private var year = 0
+    private var month = 0
+    private var day = 0
+    private lateinit var calendar: Calendar
+
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,37 +39,43 @@ class AddPayActivity : AppCompatActivity() {
         var pType:PaymentType=intent.getSerializableExtra("type") as PaymentType
         binding.tvDescPi.text="${pType.Title} türüne ödeme ekleyiniz"
 
-        dateFun()
-
-
+        binding.btnCalendarPi.setOnClickListener {
+            dateFun()
+        }
 
         binding.btnSavePi.setOnClickListener {
             payment.Price=binding.eTvPricePi.text.toString().toInt()
-
-
+            payment.Year_date=year
+            payment.Month_date=month
+            payment.Day_date=day
+            setResult(RESULT_OK)
+            finish()
         }
     }
 
-    @SuppressLint("SimpleDateFormat")
+    @SuppressLint("SimpleDateFormat", "ResourceAsColor")
     fun dateFun(){
-        binding.btnCalendarPi.setOnClickListener {
-            val datePicker=MaterialDatePicker.Builder.datePicker().build()
-            datePicker.show(supportFragmentManager,"Datepicker")
+        calendar= Calendar.getInstance()
 
-            datePicker.addOnPositiveButtonClickListener {
-                val dateFormatter=SimpleDateFormat("dd-MM-yyyy")
-                val date=dateFormatter.format(Date(it))
-                Toast.makeText(this, "$date is selected", Toast.LENGTH_LONG).show()
-                binding.tvDatePi.setText(date)
-            }
+        year = calendar.get(Calendar.YEAR)
+        month = calendar.get(Calendar.MONTH)
+        day = calendar.get(Calendar.DAY_OF_MONTH)
 
-            datePicker.addOnNegativeButtonClickListener {
-                Toast.makeText(this, "${datePicker.headerText} is cancelled", Toast.LENGTH_LONG).show()
-            }
-            datePicker.addOnCancelListener {
-                Toast.makeText(this, "Date Picker Cancelled", Toast.LENGTH_LONG).show()
+        val dialog = DatePickerDialog(this, { _, year, month, day_of_month ->
+                calendar[Calendar.YEAR] = year
+                calendar[Calendar.MONTH] = month + 1
+                calendar[Calendar.DAY_OF_MONTH] = day_of_month
+                val dateFormatter = "dd/MM/yyyy"
+                val sdf = SimpleDateFormat(dateFormatter, Locale.getDefault())
+                binding.tvDatePi.text = sdf.format(calendar.time)
+            }, calendar[Calendar.YEAR], calendar[Calendar.MONTH], calendar[Calendar.DAY_OF_MONTH])
+        calendar.add(Calendar.YEAR, 0)
 
-        }
-        }
+        //max and min date is today
+        dialog.datePicker.minDate = GregorianCalendar(year - 50, month, day, 0, 0).timeInMillis
+        dialog.datePicker.maxDate = calendar.timeInMillis
+        dialog.show()
+
     }
+
 }
