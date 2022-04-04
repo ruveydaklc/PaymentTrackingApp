@@ -58,7 +58,7 @@ class AddPayActivity : AppCompatActivity() {
             payment.Month_date=month
             payment.Day_date=day
             payment.ptTitle=pType.Title
-            PaymentBusinessLogic.addPayment(this,payment)
+            PaymentBusinessLogic.addPayment(this,payment,pType.Title)
             val intent=Intent()
             intent.putExtra("page_back","detail") //to PaymentDetailActivity -to know which page to return to (detail or main)
             intent.putExtra("update_info","not") //to PaymentDetailActivity -to know is update or not
@@ -72,6 +72,7 @@ class AddPayActivity : AppCompatActivity() {
     }
 
     @SuppressLint("SimpleDateFormat", "ResourceAsColor")
+    //TODO(is not work)
     fun dateFun(){
         calendar= Calendar.getInstance()
 

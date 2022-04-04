@@ -9,6 +9,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.view.isVisible
+import com.example.paymenttrackingapp.Controller.BLL.PaymentBusinessLogic
 import com.example.paymenttrackingapp.Controller.BLL.PaymentTypeBusinessLogic
 import com.example.paymenttrackingapp.Model.PaymentType
 import com.example.paymenttrackingapp.databinding.ActivityNewPayTypeBinding
@@ -97,7 +98,7 @@ class NewPayTypeActivity : AppCompatActivity() {
     }
 
     fun updatingTypeSetter(){
-        p= intent.getSerializableExtra("sitem") as PaymentType
+        p= intent.getSerializableExtra("sitem") as PaymentType  //from PaymentDetailActivity - updating type item
         binding.eTvPayTypeTitleNT.setText(p.Title)
         binding.eTvDayNT.setText(p.Day)
 
@@ -201,6 +202,7 @@ class NewPayTypeActivity : AppCompatActivity() {
     }
     fun elseupdatePayFun(p:PaymentType){
         PaymentTypeBusinessLogic.updatePaymentType(this,p)
+
         val intent= Intent() //for update and delete operations
         intent.putExtra("saveT_deleteF","save")     //to PaymentDetailActivity -to know is saving or deleting
         intent.putExtra("page_back","detail")   //to PaymentDetailActivity -to know which page to return to (detail or main)

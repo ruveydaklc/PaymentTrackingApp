@@ -30,6 +30,7 @@ class PaymentDetailActivity : AppCompatActivity() {
     lateinit var binding: ActivityPaymentDetailBinding
 
     lateinit var paymentType:PaymentType
+    lateinit var paymentTypeResult:PaymentType
     lateinit var PaymentTypeList:ArrayList<PaymentType>
     lateinit var paymentList:ArrayList<Payment>
 
@@ -41,10 +42,11 @@ class PaymentDetailActivity : AppCompatActivity() {
 
 
         paymentType = intent.getSerializableExtra("p_type") as PaymentType //from MainActivity - clicked type item
-        getLastPayments(paymentType.Title)
 
         PaymentTypeList= PaymentTypeBusinessLogic.getAllPaymentTypes(this)
         paymentList=PaymentBusinessLogic.getAllPayments(this,paymentType.Title)
+
+        getLastPayments(paymentType.Title)
 
         binding.tvPaymentDetailPd.text=" ' ${paymentType.Title} '  tipindeki ödemeler"
         clickFun()
@@ -53,6 +55,7 @@ class PaymentDetailActivity : AppCompatActivity() {
     }
     fun getLastPayments(ptype:String){
         paymentList=PaymentBusinessLogic.getAllPayments(this,ptype)
+
         val lm =LinearLayoutManager(this)
         lm.orientation=LinearLayoutManager.VERTICAL
         binding.rvLastPayment.layoutManager=lm
@@ -60,7 +63,8 @@ class PaymentDetailActivity : AppCompatActivity() {
         binding.rvLastPayment.adapter=LastPaymentAdapter(this,paymentList,::itemClick)
     }
 
-    fun itemClick(position:Int){
+    fun itemClick(position:Int) //payment list
+    {
 
         var pmnt:Payment =paymentList.get(position)
         showDialog(pmnt)
@@ -98,7 +102,7 @@ class PaymentDetailActivity : AppCompatActivity() {
         binding.btnUpdatePd.setOnClickListener{
             Toast.makeText(this,"Güncelleme yapılacak", Toast.LENGTH_SHORT).show()
             val intent = Intent(this,NewPayTypeActivity::class.java)
-            intent.putExtra("sitem",paymentType)
+            intent.putExtra("sitem",paymentType) //to NewPayTypeActivity - updating type item
             resultLauncher.launch(intent)
 
         }
@@ -117,19 +121,29 @@ class PaymentDetailActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     fun reResult(result: ActivityResult){
+        var info_updateOrNot =result.data!!.getStringExtra("update_info") //from NewPayTypeActivity and AddPayActivity -to know is update or not
         if(result.resultCode== RESULT_OK){
             val intentValue:String= result.data!!.getStringExtra("page_back").toString() //from AddPayActivity and NewPaymentActivity -to know which page to return to (detail or main)
 
             if (intentValue == "detail") //to know which page to return to (detail or main)
             {
-                if (result.data!!.getStringExtra("update_info") == "update") //from NewPayTypeActivity -to know is update or not
+                if (info_updateOrNot == "update") //from NewPayTypeActivity -to know is update or not
                 {
-                    paymentType=result.data!!.getSerializableExtra("saved_item") as PaymentType //from NewPayTypeActivity -to know saved item
+
+                    paymentTypeResult=result.data!!.getSerializableExtra("saved_item") as PaymentType //from NewPayTypeActivity -to know saved item
                     PaymentTypeList= PaymentTypeBusinessLogic.getAllPaymentTypes(this)
-                    binding.tvPaymentDetailPd.text=" ' ${paymentType.Title} '  tipindeki ödemeler"
+                   // getLastPayments(paymentTypeResult.Title,)
+                    binding.tvPaymentDetailPd.text=" ' ${paymentTypeResult.Title} '  tipindeki ödemeler"
                     Toast.makeText(this,"İşlem başarılı.",Toast.LENGTH_SHORT).show()
+
+                    //to update payment list
+                    for (i in paymentList){
+                        PaymentBusinessLogic.updateToPatmentType(this,i,paymentTypeResult.Title)
+                    }
+                    getLastPayments(paymentTypeResult.Title)
+
                 }
-                else if (result.data!!.getStringExtra("update_info") == "not") //from AddPayActivity -to know is update or not
+                else if (info_updateOrNot == "not") //from AddPayActivity -to know is update or not
                 {
                     getLastPayments(paymentType.Title)
                     Toast.makeText(this,"Ödeme Eklendi başarılı.",Toast.LENGTH_SHORT).show()
