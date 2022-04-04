@@ -108,7 +108,7 @@ class NewPayTypeActivity : AppCompatActivity() {
             PaymentTypeBusinessLogic.deletePaymentType(this, p.Id!!)
             val intent= Intent() //for update and delete operations
             intent.putExtra("saveT_deleteF","delete")  //to know is saving or deleting
-            intent.putExtra("page_back","main") //to know which page to return to
+            intent.putExtra("page_back","main") //to know which page to return to (detail or main)
             setResult(RESULT_OK,intent)
             finish()
         }
@@ -202,10 +202,10 @@ class NewPayTypeActivity : AppCompatActivity() {
     fun elseupdatePayFun(p:PaymentType){
         PaymentTypeBusinessLogic.updatePaymentType(this,p)
         val intent= Intent() //for update and delete operations
-        intent.putExtra("saveT_deleteF","save")
-        intent.putExtra("page_back","detail")
-        intent.putExtra("saved_item",p)
-        intent.putExtra("update_info","update")
+        intent.putExtra("saveT_deleteF","save")     //to PaymentDetailActivity -to know is saving or deleting
+        intent.putExtra("page_back","detail")   //to PaymentDetailActivity -to know which page to return to (detail or main)
+        intent.putExtra("saved_item",p)     //to PaymentDetailActivity -to know saved item
+        intent.putExtra("update_info","update")     //to PaymentDetailActivity -to know is updating
         setResult(RESULT_OK,intent)
         finish()
     }

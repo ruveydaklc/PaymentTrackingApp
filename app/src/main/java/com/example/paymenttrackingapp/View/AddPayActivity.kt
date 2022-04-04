@@ -60,8 +60,8 @@ class AddPayActivity : AppCompatActivity() {
             payment.ptTitle=pType.Title
             PaymentBusinessLogic.addPayment(this,payment)
             val intent=Intent()
-            intent.putExtra("page_back","detail")
-            intent.putExtra("update_info","not")
+            intent.putExtra("page_back","detail") //to PaymentDetailActivity -to know which page to return to (detail or main)
+            intent.putExtra("update_info","not") //to PaymentDetailActivity -to know is update or not
             setResult(RESULT_OK,intent)
             finish()
         }

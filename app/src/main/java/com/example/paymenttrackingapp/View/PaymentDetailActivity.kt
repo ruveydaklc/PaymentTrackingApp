@@ -119,17 +119,19 @@ class PaymentDetailActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     fun reResult(result: ActivityResult){
         if(result.resultCode== RESULT_OK){
-            val intentValue:String= result.data!!.getStringExtra("page_back").toString()
+            val intentValue:String= result.data!!.getStringExtra("page_back").toString() //from AddPayActivity and NewPaymentActivity -to know which page to return to (detail or main)
 
-            if (intentValue == "detail") //if we want to back to the detail activity
+            if (intentValue == "detail") //to know which page to return to (detail or main)
             {
-                if (result.data!!.getStringExtra("update_info") == "update"){
-                    paymentType=result.data!!.getSerializableExtra("saved_item") as PaymentType
+                if (result.data!!.getStringExtra("update_info") == "update") //from NewPayTypeActivity -to know is update or not
+                {
+                    paymentType=result.data!!.getSerializableExtra("saved_item") as PaymentType //from NewPayTypeActivity -to know saved item
                     PaymentTypeList= PaymentTypeBusinessLogic.getAllPaymentTypes(this)
                     binding.tvPaymentDetailPd.text=" ' ${paymentType.Title} '  tipindeki ödemeler"
                     Toast.makeText(this,"İşlem başarılı.",Toast.LENGTH_SHORT).show()
                 }
-                else if (result.data!!.getStringExtra("update_info") == "not"){
+                else if (result.data!!.getStringExtra("update_info") == "not") //from AddPayActivity -to know is update or not
+                {
                     getLastPayments()
                     Toast.makeText(this,"Ödeme Eklendi başarılı.",Toast.LENGTH_SHORT).show()
                     binding.rvLastPayment.adapter!!.notifyDataSetChanged()
@@ -137,7 +139,7 @@ class PaymentDetailActivity : AppCompatActivity() {
                 Toast.makeText(this,"İşlem başarılı.",Toast.LENGTH_SHORT).show()
 
             }
-            else if (intentValue== "main") //if we want to back to the main activity
+            else if (intentValue== "main") //from NewPayTypeActivity -to know which page to return to (detail or main)
             {
                 setResult(RESULT_OK)
                 finish()
