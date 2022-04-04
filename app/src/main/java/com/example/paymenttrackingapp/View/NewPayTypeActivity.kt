@@ -12,6 +12,7 @@ import androidx.core.view.isVisible
 import com.example.paymenttrackingapp.Controller.BLL.PaymentTypeBusinessLogic
 import com.example.paymenttrackingapp.Model.PaymentType
 import com.example.paymenttrackingapp.databinding.ActivityNewPayTypeBinding
+import kotlinx.android.synthetic.main.activity_new_pay_type.*
 
 class NewPayTypeActivity : AppCompatActivity() {
 
@@ -26,8 +27,8 @@ class NewPayTypeActivity : AppCompatActivity() {
     lateinit var title:String
     var id:Int?=null
     var pt=PaymentType(id)
-
     lateinit var PaymentTypeList:ArrayList<PaymentType>
+    lateinit var p: PaymentType
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +52,6 @@ class NewPayTypeActivity : AppCompatActivity() {
 
     }
 
-    fun toastInvalidDay(){
-        Toast.makeText(this,"Geçerli bir gün giriniz", Toast.LENGTH_SHORT).show()
-    }
 
 
     fun newTypeSetter(){
@@ -89,31 +87,7 @@ class NewPayTypeActivity : AppCompatActivity() {
                 Toast.makeText(this,"Geçerli bir tip giriniz", Toast.LENGTH_SHORT).show()
             }
             else{
-                /*if (pt.Period==yearly){
-                    if (day.toInt() > 365){
-                        toastInvalidDay()
-                    }
-
-                }
-                else if (pt.Period==monthly){
-                    if (day.toInt()>31){
-                        toastInvalidDay()
-                    }
-                }
-                else if (pt.Period==weekly){
-                    if (day.toInt()>7){
-                        toastInvalidDay()
-                    }
-                }
-                else{
-                    PaymentTypeBusinessLogic.addPaymentType(this,pt)
-                    setResult(RESULT_OK)
-                    finish()
-                }*/
-
-                PaymentTypeBusinessLogic.addPaymentType(this,pt)
-                setResult(RESULT_OK)
-                finish()
+                dateAddOrganize()
             }
         }
 
@@ -121,27 +95,18 @@ class NewPayTypeActivity : AppCompatActivity() {
     }
 
     fun updatingTypeSetter(){
-
-        //val position:PaymentType=intent.getSerializableExtra("p_type_item")
-        val p:PaymentType= intent.getSerializableExtra("sitem") as PaymentType
+        p= intent.getSerializableExtra("sitem") as PaymentType
         binding.eTvPayTypeTitleNT.setText(p.Title)
         binding.eTvDayNT.setText(p.Day)
 
-
-
         binding.btnSaveTypeNT.setOnClickListener {
-            p.Title= binding.eTvPayTypeTitleNT.text.toString()
-            p.Day=binding.eTvDayNT.text.toString()
-            PaymentTypeBusinessLogic.updatePaymentType(this,p)
-            val intent= Intent() //for update and delete operations
-            intent.putExtra("saveT_deleteF","save")
-            setResult(RESULT_OK,intent)
-            finish()
+            dateUpdateOrganize(p)
         }
         binding.btnDeleteNT.setOnClickListener {
             PaymentTypeBusinessLogic.deletePaymentType(this, p.Id!!)
             val intent= Intent() //for update and delete operations
             intent.putExtra("saveT_deleteF","delete")
+            intent.putExtra("page_back","main")
             setResult(RESULT_OK,intent)
             finish()
         }
@@ -156,12 +121,93 @@ class NewPayTypeActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
                 p.Period=periodList.get(position)
             }
-            override fun onNothingSelected(parent: AdapterView<*>?) {
+            override fun onNothingSelected(parent: AdapterView<*>?) { }
+        }
+    }
 
+
+    fun toastInvalidDay(){
+        Toast.makeText(this,"Geçerli bir gün giriniz", Toast.LENGTH_SHORT).show()
+    }
+
+    fun dateAddOrganize(){
+        if (pt.Period==yearly){
+            if (day.toInt() > 365){
+                toastInvalidDay()
+            }
+            else{
+               elseaddPayFun()
+            }
+
+        }
+        else if (pt.Period==monthly){
+            if (day.toInt()>31){
+                toastInvalidDay()
+            }
+            else{
+                elseaddPayFun()
+            }
+        }
+        else if (pt.Period==weekly){
+            if (day.toInt()>7){
+                toastInvalidDay()
+            }
+            else{
+                elseaddPayFun()
             }
         }
 
+        elseaddPayFun()
+    }
+    fun elseaddPayFun(){
+        PaymentTypeBusinessLogic.addPaymentType(this,pt)
+        setResult(RESULT_OK)
+        finish()
+    }
+
+
+    fun dateUpdateOrganize(p: PaymentType){
+
+        day = binding.eTvDayNT.text.toString()
+        p.Title= binding.eTvPayTypeTitleNT.text.toString()
+        p.Day=binding.eTvDayNT.text.toString()
+
+        if (p.Period==yearly){
+            if (day.toInt() > 365){
+                toastInvalidDay()
+            }
+            else{
+                elseupdatePayFun(p)
+            }
+
+        }
+        else if (p.Period==monthly){
+            if (day.toInt()>31){
+                toastInvalidDay()
+            }
+            else{
+                elseupdatePayFun(p)
+            }
+        }
+        else if (p.Period==weekly){
+            if (day.toInt()>7){
+                toastInvalidDay()
+            }
+            else{
+                elseupdatePayFun(p)
+            }
+        }
 
     }
+    fun elseupdatePayFun(p:PaymentType){
+        PaymentTypeBusinessLogic.updatePaymentType(this,p)
+        val intent= Intent() //for update and delete operations
+        intent.putExtra("saveT_deleteF","save")
+        intent.putExtra("page_back","detail")
+        intent.putExtra("saved_item",p)
+        setResult(RESULT_OK,intent)
+        finish()
+    }
+
 
 }

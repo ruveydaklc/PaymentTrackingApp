@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
 
 
     fun itemClick(position:Int){
-        Toast.makeText(this,"tıkladığınız eleman: "+PaymentTypeList.get(position).Title,Toast.LENGTH_SHORT).show()
+        Toast.makeText(this,PaymentTypeList.get(position).Title + " türündeki ödemeler",Toast.LENGTH_SHORT).show()
 
         var intent=Intent(this, PaymentDetailActivity::class.java)
 

@@ -2,6 +2,7 @@ package com.example.paymenttrackingapp.View
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -48,7 +49,9 @@ class AddPayActivity : AppCompatActivity() {
             payment.Year_date=year
             payment.Month_date=month
             payment.Day_date=day
-            setResult(RESULT_OK)
+            val intent=Intent()
+            intent.putExtra("page_back","detail")
+            setResult(RESULT_OK,intent)
             finish()
         }
     }
