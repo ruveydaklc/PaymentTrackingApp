@@ -81,7 +81,7 @@ class AddPayActivity : AppCompatActivity() {
 
         val dialog = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
             // Display Selected date in Toast
-            Toast.makeText(this, "Seçilen Tarih: "+""""$dayOfMonth - ${monthOfYear + 1} - $year""", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, " Seçilen Tarih: " + """$dayOfMonth - ${monthOfYear + 1} - $year""", Toast.LENGTH_LONG).show()
             //setting paymetnt's date
             payment.Year_date=year
             payment.Month_date=monthOfYear +1
