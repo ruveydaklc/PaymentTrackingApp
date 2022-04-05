@@ -1,16 +1,17 @@
 package com.example.paymenttrackingapp.View
 
 import android.R
+import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Toast
+import android.view.Window
+import android.widget.*
 import androidx.core.view.isVisible
 import com.example.paymenttrackingapp.Controller.BLL.PaymentBusinessLogic
 import com.example.paymenttrackingapp.Controller.BLL.PaymentTypeBusinessLogic
+import com.example.paymenttrackingapp.Model.Payment
 import com.example.paymenttrackingapp.Model.PaymentType
 import com.example.paymenttrackingapp.databinding.ActivityNewPayTypeBinding
 
@@ -58,6 +59,7 @@ class NewPayTypeActivity : AppCompatActivity() {
 
 
     fun newTypeSetter(){
+
         //delete button
         binding.btnDeleteNT.isVisible=false
 
@@ -106,13 +108,7 @@ class NewPayTypeActivity : AppCompatActivity() {
             dateUpdateOrganize(p)
         }
         binding.btnDeleteNT.setOnClickListener {
-            PaymentTypeBusinessLogic.deletePaymentType(this, p.Id!!)
-            val intent= Intent() //for update and delete operations
-            //intent.putExtra("saveT_deleteF","delete")  //to know is saving or deleting
-            intent.putExtra("page_back","main") //to know which page to return to (detail or main)
-            intent.putExtra("update_info","delete") //to PaymentDetailActivity -to know is saving or deleting and deleting all payments
-            setResult(RESULT_OK,intent)
-            finish()
+            showPopupDialog(p)
         }
 
         //spinner
@@ -168,6 +164,9 @@ class NewPayTypeActivity : AppCompatActivity() {
 
     }
     fun elseaddPayFun(){
+
+
+
         PaymentTypeBusinessLogic.addPaymentType(this,pt)
         setResult(RESULT_OK)
         finish()
@@ -224,6 +223,36 @@ class NewPayTypeActivity : AppCompatActivity() {
         intent.putExtra("update_info","update")     //to PaymentDetailActivity -to know is updating
         setResult(RESULT_OK,intent)
         finish()
+    }
+
+    private fun showPopupDialog(p: PaymentType) {
+        var popTitle="!!Uyarı!!"
+        val popMessage="Ödemeyi silmek istiyor musunuz?"
+        val dialog = Dialog(this)
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialog.setCancelable(false)
+        dialog.setContentView(com.example.paymenttrackingapp.R.layout.popup)
+        val message = dialog.findViewById(com.example.paymenttrackingapp.R.id.tvPopupMessage) as TextView
+        message.text = popMessage
+        val title = dialog.findViewById(com.example.paymenttrackingapp.R.id.tvPopupTitle) as TextView
+        title.text = popTitle
+        val yesBtn = dialog.findViewById(com.example.paymenttrackingapp.R.id.btnDeletePopup) as Button
+        val cancelBtn = dialog.findViewById(com.example.paymenttrackingapp.R.id.btnCancelPopup) as TextView
+        yesBtn.setOnClickListener {
+            PaymentTypeBusinessLogic.deletePaymentType(this, p.Id!!)
+            val intent= Intent() //for update and delete operations
+            //intent.putExtra("saveT_deleteF","delete")  //to know is saving or deleting
+            intent.putExtra("page_back","main") //to know which page to return to (detail or main)
+            intent.putExtra("update_info","delete") //to PaymentDetailActivity -to know is saving or deleting and deleting all payments
+            setResult(RESULT_OK,intent)
+            dialog.dismiss()
+            finish()
+        }
+        cancelBtn.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.show()
+
     }
 
 

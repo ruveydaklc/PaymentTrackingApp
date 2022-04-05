@@ -49,7 +49,7 @@ class AddPayActivity : AppCompatActivity() {
         var pType:PaymentType=intent.getSerializableExtra("type") as PaymentType //from PaymentDetailActivity - clicked adding button
         binding.tvDescPi.text="${pType.Title} "
 
-        binding.btnCalendarPi.setOnClickListener {
+        binding.tvDatePi.setOnClickListener {
             clickDataPicker()
         }
 
