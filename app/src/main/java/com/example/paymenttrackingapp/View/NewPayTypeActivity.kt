@@ -31,13 +31,14 @@ class NewPayTypeActivity : AppCompatActivity() {
     lateinit var PaymentTypeList:ArrayList<PaymentType>
     lateinit var p: PaymentType
 
+    var positionSpinner=yearly
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityNewPayTypeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
 
         day=""
         title=""
@@ -48,6 +49,18 @@ class NewPayTypeActivity : AppCompatActivity() {
 
         isNew=intent.getBooleanExtra("new",false) //from MainActivity - is a new record
 
+        //spinner
+        val adapter = ArrayAdapter(this,
+            R.layout.simple_spinner_item,periodList)
+        binding.spinnerPeriodNT.adapter = adapter
+
+        binding.spinnerPeriodNT.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                positionSpinner=periodList.get(position)
+            }
+            override fun onNothingSelected(parent: AdapterView<*>?) { }
+        }
         if (isNew == true ){
             //is a new type
             newTypeSetter()
@@ -58,27 +71,10 @@ class NewPayTypeActivity : AppCompatActivity() {
 
     }
 
-
-
     fun newTypeSetter(){
 
         //delete button
         binding.btnDeleteNT.isVisible=false
-
-        //spinner
-        val adapter = ArrayAdapter(this,
-            R.layout.simple_spinner_item,periodList)
-        binding.spinnerPeriodNT.adapter = adapter
-
-        binding.spinnerPeriodNT.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-
-                //Toast.makeText(this@NewPayTypeActivity,periodList.get(position) + " seçildi" , Toast.LENGTH_SHORT).show()
-                pt.Period=periodList.get(position)
-            }
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }
 
         binding.btnSaveTypeNT.setOnClickListener {
 
@@ -86,6 +82,7 @@ class NewPayTypeActivity : AppCompatActivity() {
             pt.Title=title
             day = binding.eTvDayNT.text.toString()
             pt.Day=day
+            pt.Period=positionSpinner
 
             if (day == ""){
                 toastInvalidDay()
@@ -97,8 +94,6 @@ class NewPayTypeActivity : AppCompatActivity() {
                 dateAddOrganize(pt)
             }
         }
-
-
     }
 
     fun updatingTypeSetter(){
@@ -112,21 +107,7 @@ class NewPayTypeActivity : AppCompatActivity() {
         binding.btnDeleteNT.setOnClickListener {
             showPopupDialog(p)
         }
-
-        //spinner
-        val adapter = ArrayAdapter(this,
-            R.layout.simple_spinner_item,periodList)
-        binding.spinnerPeriodNT.adapter = adapter
-
-        binding.spinnerPeriodNT.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                p.Period=periodList.get(position)
-            }
-            override fun onNothingSelected(parent: AdapterView<*>?) { }
-        }
     }
-
 
     fun toastInvalidDay(){
         Toast.makeText(this,"Geçerli bir gün giriniz", Toast.LENGTH_SHORT).show()
@@ -177,26 +158,18 @@ class NewPayTypeActivity : AppCompatActivity() {
 
                 pTValue.Title=binding.eTvPayTypeTitleNT.text.toString()
                 pTValue.Day= binding.eTvDayNT.text.toString()
-                pTValue.Period=spinnerFun()
-
+                pTValue.Period=positionSpinner
             }
         }
         if (value != null ) //updating
         {
             PaymentTypeBusinessLogic.updatePaymentType(this,pTValue)
-            /*val intent =Intent()
-            intent.putExtra("upd",pTValue) // to mainactivity
-            setResult(RESULT_OK,intent)*/
-
         }
         else {
             PaymentTypeBusinessLogic.addPaymentType(this,pt)
-
         }
-
         setResult(RESULT_OK)
         finish()
-
     }
 
 
@@ -205,6 +178,7 @@ class NewPayTypeActivity : AppCompatActivity() {
         day = binding.eTvDayNT.text.toString()
         p.Title= binding.eTvPayTypeTitleNT.text.toString()
         p.Day=binding.eTvDayNT.text.toString()
+        p.Period=positionSpinner
 
         if (day.toInt() <= 0){
             toastInvalidDay()
@@ -236,15 +210,11 @@ class NewPayTypeActivity : AppCompatActivity() {
                 }
             }
         }
-
-
-
     }
     fun elseupdatePayFun(p:PaymentType){
         PaymentTypeBusinessLogic.updatePaymentType(this,p)
 
         val intent= Intent() //for update and delete operations
-        //intent.putExtra("saveT_deleteF","save")     //to PaymentDetailActivity -to know is saving or deleting
         intent.putExtra("page_back","detail")   //to PaymentDetailActivity -to know which page to return to (detail or main)
         intent.putExtra("saved_item",p)     //to PaymentDetailActivity -to know saved item
         intent.putExtra("update_info","update")     //to PaymentDetailActivity -to know is updating
@@ -268,7 +238,6 @@ class NewPayTypeActivity : AppCompatActivity() {
         yesBtn.setOnClickListener {
             PaymentTypeBusinessLogic.deletePaymentType(this, p.Id!!)
             val intent= Intent() //for update and delete operations
-            //intent.putExtra("saveT_deleteF","delete")  //to know is saving or deleting
             intent.putExtra("page_back","main") //to know which page to return to (detail or main)
             intent.putExtra("update_info","delete") //to PaymentDetailActivity -to know is saving or deleting and deleting all payments
             setResult(RESULT_OK,intent)
@@ -280,27 +249,6 @@ class NewPayTypeActivity : AppCompatActivity() {
         }
         dialog.show()
 
-    }
-
-
-    fun spinnerFun() :String{
-        var a=""
-        //spinner
-        val adapter = ArrayAdapter(this,
-            R.layout.simple_spinner_item,periodList)
-        binding.spinnerPeriodNT.adapter = adapter
-
-        binding.spinnerPeriodNT.onItemSelectedListener = object :
-            AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
-                a=periodList.get(position)
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-
-            }
-        }
-        return a
     }
 
 

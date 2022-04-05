@@ -29,10 +29,7 @@ class AddPayActivity : AppCompatActivity() {
     lateinit var binding : ActivityAddPayBinding
 
     var id:Int?=null
-    //var price:Int?=null
-
     var payment = Payment(id)
-
 
     var year = 0
     var month = 0
@@ -94,10 +91,6 @@ class AddPayActivity : AppCompatActivity() {
             val sdf = SimpleDateFormat(dateFormatter, Locale.getDefault())
             binding.tvDatePi.text = "${dayOfMonth}/${monthOfYear + 1}/${year}"
                                                                                }, year, month, day)
-
-
-
-
 
         //max and min date- max date is today
         dialog.datePicker.maxDate=calendar.timeInMillis

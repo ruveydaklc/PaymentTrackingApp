@@ -40,7 +40,6 @@ class PaymentDetailActivity : AppCompatActivity() {
         binding= ActivityPaymentDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         paymentType = intent.getSerializableExtra("p_type") as PaymentType //from MainActivity - clicked type item
 
         PaymentTypeList= PaymentTypeBusinessLogic.getAllPaymentTypes(this)
@@ -65,10 +64,8 @@ class PaymentDetailActivity : AppCompatActivity() {
 
     fun itemClick(position:Int) //payment list
     {
-
         var pmnt:Payment =paymentList.get(position)
         showDialog(pmnt)
-
     }
 
 
@@ -102,11 +99,9 @@ class PaymentDetailActivity : AppCompatActivity() {
             val intent = Intent(this,NewPayTypeActivity::class.java)
             intent.putExtra("sitem",paymentType) //to NewPayTypeActivity - updating type item
             resultLauncher.launch(intent)
-
         }
 
         binding.btnAddPaymentPd.setOnClickListener {
-            Toast.makeText(this,"Ödeme Eklenecek", Toast.LENGTH_SHORT).show()
             val intent= Intent(this,AddPayActivity::class.java)
             intent.putExtra("type",paymentType) //to AddPayActivity
             resultLauncher.launch(intent)
