@@ -20,6 +20,17 @@
     <string name="cancel">Vazgeç</string>
     <string name="title">Başlık</string>
     <string name="message">Mesaj</string>
+    <string name="payment_type">Ödeme Tipi</string>
+    <string name="payment_day">Ödeme Günü</string>
+    <string name="date_ex"> __/__/____</string>
+    <string name="payment_info_save">Ödeme Türü:</string>
+
+
+
+
+
+
+
 
 
 

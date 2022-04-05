@@ -180,31 +180,38 @@ class NewPayTypeActivity : AppCompatActivity() {
         p.Title= binding.eTvPayTypeTitleNT.text.toString()
         p.Day=binding.eTvDayNT.text.toString()
 
-        if (p.Period==yearly){
-            if (day.toInt() > 365){
-                toastInvalidDay()
-            }
-            else{
-                elseupdatePayFun(p)
-            }
+        if (day.toInt() <= 0){
+            toastInvalidDay()
+        }
+        else{
+            if (p.Period==yearly){
+                if (day.toInt() > 365){
+                    toastInvalidDay()
+                }
+                else{
+                    elseupdatePayFun(p)
+                }
 
+            }
+            else if (p.Period==monthly){
+                if (day.toInt()>31){
+                    toastInvalidDay()
+                }
+                else{
+                    elseupdatePayFun(p)
+                }
+            }
+            else if (p.Period==weekly){
+                if (day.toInt()>7){
+                    toastInvalidDay()
+                }
+                else{
+                    elseupdatePayFun(p)
+                }
+            }
         }
-        else if (p.Period==monthly){
-            if (day.toInt()>31){
-                toastInvalidDay()
-            }
-            else{
-                elseupdatePayFun(p)
-            }
-        }
-        else if (p.Period==weekly){
-            if (day.toInt()>7){
-                toastInvalidDay()
-            }
-            else{
-                elseupdatePayFun(p)
-            }
-        }
+
+
 
     }
     fun elseupdatePayFun(p:PaymentType){
