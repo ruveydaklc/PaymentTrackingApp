@@ -48,7 +48,7 @@ class PaymentDetailActivity : AppCompatActivity() {
 
         getLastPayments(paymentType.Title)
 
-        binding.tvPaymentDetailPd.text=" ' ${paymentType.Title} '  tipindeki ödemeler"
+        binding.tvPaymentDetailPd.text = " ' ${paymentType.Title} '  tipindeki ödemeler"
         clickFun()
 
 
@@ -86,7 +86,6 @@ class PaymentDetailActivity : AppCompatActivity() {
         val yesBtn = dialog.findViewById(R.id.btnDeletePopup) as Button
         val cancelBtn = dialog.findViewById(R.id.btnCancelPopup) as TextView
         yesBtn.setOnClickListener {
-            Toast.makeText(this,"ürün sil",Toast.LENGTH_SHORT).show()
             PaymentBusinessLogic.deletePayment(this, p.Id!!)
             getLastPayments(paymentType.Title)
             dialog.dismiss()
@@ -100,7 +99,6 @@ class PaymentDetailActivity : AppCompatActivity() {
 
     fun clickFun(){
         binding.btnUpdatePd.setOnClickListener{
-            Toast.makeText(this,"Güncelleme yapılacak", Toast.LENGTH_SHORT).show()
             val intent = Intent(this,NewPayTypeActivity::class.java)
             intent.putExtra("sitem",paymentType) //to NewPayTypeActivity - updating type item
             resultLauncher.launch(intent)
@@ -134,6 +132,7 @@ class PaymentDetailActivity : AppCompatActivity() {
                 {
 
                     paymentTypeResult=result.data!!.getSerializableExtra("saved_item") as PaymentType //from NewPayTypeActivity -to know saved item
+                    paymentType=paymentTypeResult
                     PaymentTypeList= PaymentTypeBusinessLogic.getAllPaymentTypes(this)
                    // getLastPayments(paymentTypeResult.Title,)
                     binding.tvPaymentDetailPd.text=" ' ${paymentTypeResult.Title} '  tipindeki ödemeler"
@@ -152,11 +151,17 @@ class PaymentDetailActivity : AppCompatActivity() {
                     Toast.makeText(this,"Ödeme Eklendi başarılı.",Toast.LENGTH_SHORT).show()
                     binding.rvLastPayment.adapter!!.notifyDataSetChanged()
                 }
-                Toast.makeText(this,"İşlem başarılı.",Toast.LENGTH_SHORT).show()
-
             }
             else if (intentValue== "main") //from NewPayTypeActivity -to know which page to return to (detail or main)
             {
+
+                if (info_updateOrNot=="delete") //from NewPAyTypeActivity -to deleting all payments
+                {
+                    for (i in paymentList){
+                    PaymentBusinessLogic.deletePayment(this, i.Id!!)
+                    Toast.makeText(this,"Ödeme tipiyle birlikte ödeme geçmişi de silinmiştir.",Toast.LENGTH_SHORT).show()
+                    }
+                }
                 setResult(RESULT_OK)
                 finish()
             }

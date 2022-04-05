@@ -22,9 +22,6 @@ class PaymentBusinessLogic {
             val poU=PaymentOperation(context)
             poU.updateToPatmentType(paymant,pyType)
         }
-
-
-
     }
 
 }

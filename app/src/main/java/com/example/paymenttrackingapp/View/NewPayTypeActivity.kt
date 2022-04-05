@@ -87,7 +87,7 @@ class NewPayTypeActivity : AppCompatActivity() {
                 toastInvalidDay()
             }
             else if (title==""){
-                Toast.makeText(this,"Geçerli bir tip giriniz", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this,"Geçerli bir başlık giriniz", Toast.LENGTH_SHORT).show()
             }
             else{
                 dateAddOrganize(pt)
@@ -108,8 +108,9 @@ class NewPayTypeActivity : AppCompatActivity() {
         binding.btnDeleteNT.setOnClickListener {
             PaymentTypeBusinessLogic.deletePaymentType(this, p.Id!!)
             val intent= Intent() //for update and delete operations
-            intent.putExtra("saveT_deleteF","delete")  //to know is saving or deleting
+            //intent.putExtra("saveT_deleteF","delete")  //to know is saving or deleting
             intent.putExtra("page_back","main") //to know which page to return to (detail or main)
+            intent.putExtra("update_info","delete") //to PaymentDetailActivity -to know is saving or deleting and deleting all payments
             setResult(RESULT_OK,intent)
             finish()
         }
@@ -134,31 +135,37 @@ class NewPayTypeActivity : AppCompatActivity() {
     }
 
     fun dateAddOrganize(pt:PaymentType){
-        if (pt.Period == yearly){
-            if (day.toInt() > 365){
-                toastInvalidDay()
-            }
-            else{
-               elseaddPayFun()
-            }
+        if (day.toInt() <= 0){
+            toastInvalidDay()
+        }
+        else{
+            if (pt.Period == yearly){
+                if (day.toInt() > 365 ){
+                    toastInvalidDay()
+                }
+                else{
+                    elseaddPayFun()
+                }
 
+            }
+            else if (pt.Period==monthly){
+                if (day.toInt()>31){
+                    toastInvalidDay()
+                }
+                else{
+                    elseaddPayFun()
+                }
+            }
+            else if (pt.Period==weekly){
+                if (day.toInt()>7){
+                    toastInvalidDay()
+                }
+                else{
+                    elseaddPayFun()
+                }
+            }
         }
-        else if (pt.Period==monthly){
-            if (day.toInt()>31){
-                toastInvalidDay()
-            }
-            else{
-                elseaddPayFun()
-            }
-        }
-        else if (pt.Period==weekly){
-            if (day.toInt()>7){
-                toastInvalidDay()
-            }
-            else{
-                elseaddPayFun()
-            }
-        }
+
     }
     fun elseaddPayFun(){
         PaymentTypeBusinessLogic.addPaymentType(this,pt)
@@ -204,7 +211,7 @@ class NewPayTypeActivity : AppCompatActivity() {
         PaymentTypeBusinessLogic.updatePaymentType(this,p)
 
         val intent= Intent() //for update and delete operations
-        intent.putExtra("saveT_deleteF","save")     //to PaymentDetailActivity -to know is saving or deleting
+        //intent.putExtra("saveT_deleteF","save")     //to PaymentDetailActivity -to know is saving or deleting
         intent.putExtra("page_back","detail")   //to PaymentDetailActivity -to know which page to return to (detail or main)
         intent.putExtra("saved_item",p)     //to PaymentDetailActivity -to know saved item
         intent.putExtra("update_info","update")     //to PaymentDetailActivity -to know is updating

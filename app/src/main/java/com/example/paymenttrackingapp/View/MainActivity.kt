@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
     fun reResult(result:ActivityResult){
 
         if(result.resultCode== RESULT_OK){
-            Toast.makeText(this,"Ödeme Tipiniz Kaydedilmiştir",Toast.LENGTH_SHORT).show()
+            Toast.makeText(this,"İşlem Başarılı",Toast.LENGTH_SHORT).show()
         }
         else{ }
         getAllPaymentTypes()
