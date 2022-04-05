@@ -31,6 +31,8 @@ class NewPayTypeActivity : AppCompatActivity() {
     lateinit var PaymentTypeList:ArrayList<PaymentType>
     lateinit var p: PaymentType
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding= ActivityNewPayTypeBinding.inflate(layoutInflater)
@@ -140,7 +142,7 @@ class NewPayTypeActivity : AppCompatActivity() {
                     toastInvalidDay()
                 }
                 else{
-                    elseaddPayFun()
+                    elseaddPayFun(pt)
                 }
 
             }
@@ -149,7 +151,7 @@ class NewPayTypeActivity : AppCompatActivity() {
                     toastInvalidDay()
                 }
                 else{
-                    elseaddPayFun()
+                    elseaddPayFun(pt)
                 }
             }
             else if (pt.Period==weekly){
@@ -157,19 +159,44 @@ class NewPayTypeActivity : AppCompatActivity() {
                     toastInvalidDay()
                 }
                 else{
-                    elseaddPayFun()
+                    elseaddPayFun(pt)
                 }
             }
         }
-
     }
-    fun elseaddPayFun(){
 
+    fun elseaddPayFun(pt:PaymentType){
+        var value:String?=null
+        var pTValue=PaymentType(id)
 
+        for (i in PaymentTypeList){
+            if (binding.eTvPayTypeTitleNT.text.toString() == i.Title)
+            {
+                value=i.Title
+                pTValue.Id=i.Id
 
-        PaymentTypeBusinessLogic.addPaymentType(this,pt)
+                pTValue.Title=binding.eTvPayTypeTitleNT.text.toString()
+                pTValue.Day= binding.eTvDayNT.text.toString()
+                pTValue.Period=spinnerFun()
+
+            }
+        }
+        if (value != null ) //updating
+        {
+            PaymentTypeBusinessLogic.updatePaymentType(this,pTValue)
+            /*val intent =Intent()
+            intent.putExtra("upd",pTValue) // to mainactivity
+            setResult(RESULT_OK,intent)*/
+
+        }
+        else {
+            PaymentTypeBusinessLogic.addPaymentType(this,pt)
+
+        }
+
         setResult(RESULT_OK)
         finish()
+
     }
 
 
@@ -253,6 +280,27 @@ class NewPayTypeActivity : AppCompatActivity() {
         }
         dialog.show()
 
+    }
+
+
+    fun spinnerFun() :String{
+        var a=""
+        //spinner
+        val adapter = ArrayAdapter(this,
+            R.layout.simple_spinner_item,periodList)
+        binding.spinnerPeriodNT.adapter = adapter
+
+        binding.spinnerPeriodNT.onItemSelectedListener = object :
+            AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View, position: Int, id: Long) {
+                a=periodList.get(position)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+        }
+        return a
     }
 
 

@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import com.example.paymenttrackingapp.Controller.DAL.PaymentPag.PaymentOperation
 import com.example.paymenttrackingapp.Model.PaymentType
 
 class PaymentTypeOperation(context: Context) {
@@ -62,6 +63,7 @@ class PaymentTypeOperation(context: Context) {
         cv.put("Day",pType.Day)
 
         open()
+
         val record = PaymentTypeDatabase!!.insert(tableName,null,cv)
         close()
         return  record
@@ -84,7 +86,5 @@ class PaymentTypeOperation(context: Context) {
         PaymentTypeDatabase!!.delete(tableName,"Id = ?", arrayOf(id.toString()))
         close()
     }
-
-
 
 }

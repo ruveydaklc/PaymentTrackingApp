@@ -87,7 +87,12 @@ class MainActivity : AppCompatActivity() {
     fun reResult(result:ActivityResult){
 
         if(result.resultCode== RESULT_OK){
+            /*var p:PaymentType=result.data!!.getSerializableExtra("upd") as PaymentType //from NewPayTypeActivity -for updating
+            PaymentTypeBusinessLogic.updatePaymentType(this,p)*/
+
+
             Toast.makeText(this,"İşlem Başarılı",Toast.LENGTH_SHORT).show()
+
         }
         else{ }
         getAllPaymentTypes()
